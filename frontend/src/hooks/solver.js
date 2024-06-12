@@ -6,6 +6,7 @@ const useSudokuSolver = () => {
   const [grid, setGrid] = useRecoilState(sudokuGridState);
   const [showAlert, setShowAlert] = useRecoilState(alertState);
   const [isSolving, setIsSolving] = useState(false);
+  
   console.log(grid);
 
   const isValid = useCallback((grid, row, col, num) => {
@@ -39,16 +40,17 @@ const useSudokuSolver = () => {
         if (solveSudoku(grid)) {
           return true;
         }
-        grid[row][col] = 0;
+        grid[row][col] = 0; // Reset cell on backtrack
       }
     }
-    return false;
+    return false; // Trigger backtrack
   }, [isValid]);
 
   const handleSolve = useCallback(() => {
     setIsSolving(true);
     const gridCopy = grid.map(row => [...row]);
-    if (solveSudoku(gridCopy)) {
+    const solved = solveSudoku(gridCopy);
+    if (solved) {
       setGrid(gridCopy);
     } else {
       setShowAlert(true);

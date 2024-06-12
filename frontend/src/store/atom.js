@@ -11,4 +11,9 @@ export const alertState=atom({
     default:false
 })
 
+export const homeState=atom({
+    key:"homeState",
+    default:false
+})
+
 
